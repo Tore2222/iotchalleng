@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "123133368250",
+    "firebase_url": "https://esp32test-58f3f-default-rtdb.firebaseio.com",
+    "project_id": "esp32test-58f3f",
+    "storage_bucket": "esp32test-58f3f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:123133368250:android:3f09b5d2c1e86eef9e2f83",
+        "android_client_info": {
+          "package_name": "com.example.app_tuoi_cay"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "123133368250-dgrsa5th05142mqbrr070cg44h9uglmn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmJ8hgUhk9zS-_anMpGI9fA45MR90W0RI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "123133368250-dgrsa5th05142mqbrr070cg44h9uglmn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
