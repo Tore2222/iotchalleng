@@ -1,30 +1,31 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
-import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
-
-import 'package:apptuoicayver1/main.dart';
-
-void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
-
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
-  });
-}
+bên trong firebase của tôi có một trường timesetting_pump gồm các thành phần con là time1, time2, time3.... và trong time1,time2,time3... gồm các trường dữ liệu là minute và humidity . tôi muốn các dữ liệu đó được thêm và thay vào dữ liệu của Time và Humi của đoạn code này để hiển thị lên app
+children: [
+                  BoxTimeWatering(Time: '10:00 AM', Humi: '80%'),
+                  SizedBox(
+                    width: widthR * 100,
+                  ),
+                  BoxTimeWatering(Time: '10:00 AM', Humi: '80%'),
+                  SizedBox(
+                    width: widthR * 100,
+                  ),
+                  BoxTimeWatering(Time: '10:00 AM', Humi: '80%'),
+                  SizedBox(
+                    width: widthR * 100,
+                  ),
+                  BoxTimeWatering(Time: '10:00 AM', Humi: '80%'),
+                  SizedBox(
+                    width: widthR * 100,
+                  ),
+                  BoxTimeWatering(Time: '10:00 AM', Humi: '80%'),
+                  SizedBox(
+                    width: widthR * 100,
+                  ),
+                  BoxTimeWatering(Time: '10:00 AM', Humi: '80%'),
+                  SizedBox(
+                    width: widthR * 100,
+                  ),
+                  BoxTimeWatering(Time: '10:00 AM', Humi: '80%'),
+                  SizedBox(
+                    width: widthR * 1 - 0,
+                  ), // Thêm các container con khác tại đây
+                ],

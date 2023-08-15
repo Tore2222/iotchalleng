@@ -1,4 +1,5 @@
 import 'package:app_tuoi_cay/view/history.dart';
+import 'package:app_tuoi_cay/view/list_time_wattering.dart';
 import 'package:app_tuoi_cay/view/setting.dart';
 import 'package:app_tuoi_cay/view/status.dart';
 import 'package:flutter/foundation.dart';
@@ -137,7 +138,7 @@ class _HomeState extends State<Home> {
   Widget getBarPage() {
     return IndexedStack(
       index: activeTab,
-      children: <Widget>[StatusPage(), SettingPage(), HistoryPage()],
+      children: <Widget>[StatusPage(), SettingPage(), ListTimeWattering()],
     );
   }
 }

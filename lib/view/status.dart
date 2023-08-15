@@ -1,6 +1,12 @@
+import 'dart:async';
+import 'dart:html';
+
 import 'package:app_tuoi_cay/theme/colors.dart';
 import 'package:app_tuoi_cay/widget/custom_appbar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../widget/box_time_watering.dart';
 
@@ -12,7 +18,56 @@ class StatusPage extends StatefulWidget {
 }
 
 class _StatusPageState extends State<StatusPage> {
+  DatabaseReference _databaseReference =
+      FirebaseDatabase.instance.reference().child('person0/id0');
+
   bool status = true;
+  late DateTime _currentTime;
+  List<Map<String, dynamic>> timeSettings = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _currentTime = DateTime.now();
+    // Cập nhật thời gian mỗi giây
+    Timer.periodic(Duration(minutes: 1), (Timer timer) {
+      if (mounted) {
+        setState(() {
+          _currentTime = DateTime.now();
+        });
+      }
+    });
+    _databaseReference.child('timesetting_pump').onValue.listen((event) {
+      if (event.snapshot != null) {
+        DataSnapshot snapshot = event.snapshot as DataSnapshot;
+        Map<dynamic, dynamic> data = snapshot.value as Map<dynamic, dynamic>;
+
+        List<Map<String, dynamic>> settings = [];
+
+        data.forEach((key, value) {
+          if (value != null && value is Map<dynamic, dynamic>) {
+            if (value.containsKey('minute') &&
+                value.containsKey('humidity') &&
+                value.containsKey('hour') &&
+                value.containsKey('status')) {
+              if (value['status'] == 1) {
+                settings.add({
+                  'hour': value['hour'].toString(),
+                  'minute': value['minute'].toString(),
+                  'humidity': value['humidity'].toString(),
+                });
+              }
+            }
+          }
+        });
+
+        setState(() {
+          timeSettings = settings;
+        });
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,6 +78,11 @@ class _StatusPageState extends State<StatusPage> {
   }
 
   getBody() {
+    DateTime now = DateTime.now();
+    String formattedDate = DateFormat('dd').format(now);
+    String formattedTime = DateFormat('hh:mm a').format(now);
+    String formattedMonth = DateFormat('MMMM').format(now);
+    String formattedDayOfWeek = DateFormat('EEEE').format(now);
     double heightR, widthR;
     heightR = MediaQuery.of(context).size.height / 1080; //v26
     widthR = MediaQuery.of(context).size.width / 2400;
@@ -136,7 +196,7 @@ class _StatusPageState extends State<StatusPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Saturday, 17 June',
+                        '$formattedDayOfWeek, $formattedDate $formattedMonth',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
@@ -145,7 +205,7 @@ class _StatusPageState extends State<StatusPage> {
                         ),
                       ),
                       Text(
-                        '8:00 AM',
+                        '$formattedTime',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
@@ -155,15 +215,32 @@ class _StatusPageState extends State<StatusPage> {
                       )
                     ],
                   ),
-                  Text(
-                    '70 %',
-                    style: TextStyle(
-                      fontStyle: FontStyle.italic,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 50,
-                      color: Colors.white,
-                      fontFamily: 'Roboto',
-                    ),
+                  StreamBuilder(
+                    stream: _databaseReference.onValue,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData &&
+                          !snapshot.hasError &&
+                          snapshot.data!.snapshot.value != null) {
+                        // Truy cập dữ liệu từ snapshot
+                        Map<dynamic, dynamic> data = snapshot
+                            .data!.snapshot.value as Map<dynamic, dynamic>;
+
+                        String humi = data['humidity_current'].toString();
+
+                        return Text(
+                          '$humi %',
+                          style: TextStyle(
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 50,
+                            color: Colors.white,
+                            fontFamily: 'Roboto',
+                          ),
+                        );
+                      } else {
+                        return CircularProgressIndicator();
+                      }
+                    },
                   ),
                   SizedBox(
                     width: widthR / 4,
@@ -191,38 +268,23 @@ class _StatusPageState extends State<StatusPage> {
               width: widthR * 2500,
               height: heightR *
                   200, // Đặt chiều cao cho container chứa các container con
-              child: ListView(
-                scrollDirection: Axis.horizontal, // Định hướng cuộn ngang
-                children: [
-                  BoxTimeWatering(Time: '10:00 AM', Humi: '80%'),
-                  SizedBox(
-                    width: widthR * 100,
-                  ),
-                  BoxTimeWatering(Time: '10:00 AM', Humi: '80%'),
-                  SizedBox(
-                    width: widthR * 100,
-                  ),
-                  BoxTimeWatering(Time: '10:00 AM', Humi: '80%'),
-                  SizedBox(
-                    width: widthR * 100,
-                  ),
-                  BoxTimeWatering(Time: '10:00 AM', Humi: '80%'),
-                  SizedBox(
-                    width: widthR * 100,
-                  ),
-                  BoxTimeWatering(Time: '10:00 AM', Humi: '80%'),
-                  SizedBox(
-                    width: widthR * 100,
-                  ),
-                  BoxTimeWatering(Time: '10:00 AM', Humi: '80%'),
-                  SizedBox(
-                    width: widthR * 100,
-                  ),
-                  BoxTimeWatering(Time: '10:00 AM', Humi: '80%'),
-                  SizedBox(
-                    width: widthR * 1 - 0,
-                  ), // Thêm các container con khác tại đây
-                ],
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: timeSettings.length,
+                itemBuilder: (context, index) {
+                  return Row(
+                    children: [
+                      BoxTimeWatering(
+                        Time:
+                            '${timeSettings[index]['hour']}:${timeSettings[index]['minute']}',
+                        Humi: '${timeSettings[index]['humidity']}%',
+                      ),
+                      SizedBox(
+                          width: widthR *
+                              50), // Thêm khoảng cách ngang giữa các BoxTimeWatering
+                    ],
+                  );
+                },
               ),
             ),
             SizedBox(

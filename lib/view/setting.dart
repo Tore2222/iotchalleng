@@ -4,6 +4,8 @@ import 'package:app_tuoi_cay/view/time_watering.dart';
 import 'package:app_tuoi_cay/widget/custom_appbar.dart';
 import 'package:flutter/material.dart';
 
+import 'list_time_wattering.dart';
+
 class SettingPage extends StatefulWidget {
   const SettingPage({Key? key}) : super(key: key);
 
