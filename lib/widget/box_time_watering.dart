@@ -44,7 +44,7 @@ class _BoxTimeWateringState extends State<BoxTimeWatering> {
             width: widthR * 300,
             height: heightR * 100,
             child: Image.asset(
-              "assets/images/xxxx",
+              "assets/icon1.png",
               fit: BoxFit.contain,
             ),
           ),

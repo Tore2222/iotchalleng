@@ -2,11 +2,13 @@ import 'package:app_tuoi_cay/view/history.dart';
 import 'package:app_tuoi_cay/view/list_time_wattering.dart';
 import 'package:app_tuoi_cay/view/setting.dart';
 import 'package:app_tuoi_cay/view/status.dart';
+import 'package:app_tuoi_cay/view/time_watering.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:icon_forest/icon_forest.dart';
 import '../theme/colors.dart';
 import '../widget/bottombar_item.dart';
+import 'empty_page.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -138,7 +140,7 @@ class _HomeState extends State<Home> {
   Widget getBarPage() {
     return IndexedStack(
       index: activeTab,
-      children: <Widget>[StatusPage(), SettingPage(), ListTimeWattering()],
+      children: <Widget>[StatusPage(), TimeWatering(), EmptyPage()],
     );
   }
 }

@@ -26,11 +26,10 @@ class _WaterTileState extends State<WaterTile> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         margin: const EdgeInsets.fromLTRB(20, 6, 20, 0),
         child: ListTile(
-          leading: CircleAvatar(
-              radius: 25.0, child: Image.asset('assets/images/1.png')),
+          leading: Image.asset('assets/icon1.png'),
           title: SwitchListTile(
             title: Text('${widget.hour}:${widget.minute}'),
-            subtitle: Text('${widget.humidity}'),
+            subtitle: Text('${widget.humidity}%'),
             secondary: Icon(Icons.timer),
             activeColor: Colors.teal,
             activeTrackColor: Colors.green,

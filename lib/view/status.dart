@@ -71,7 +71,7 @@ class _StatusPageState extends State<StatusPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: status ? secondary : Colors.grey[850],
+      backgroundColor: status ? appBgColorSecondary : Colors.grey[850],
       appBar: CustomAppbar(),
       body: getBody(),
     );
@@ -133,10 +133,13 @@ class _StatusPageState extends State<StatusPage> {
                     width: heightR * 90,
                     decoration:
                         BoxDecoration(borderRadius: BorderRadius.circular(90)),
-                    child: Image.asset(
-                      "assets/images/xxxx",
+                    child: status ? Image.asset(
+                      "sun.png",
                       fit: BoxFit.contain,
-                    ),
+                    ) : Image.asset(
+                      "moon.png",
+                      fit: BoxFit.contain,
+                    )
                   ),
                   SizedBox(
                     width: widthR * 700,
@@ -254,8 +257,9 @@ class _StatusPageState extends State<StatusPage> {
             Text(
               "Time watering",
               style: TextStyle(
-                fontWeight: FontWeight.w200,
+                fontWeight: FontWeight.bold,
                 fontSize: 25,
+
               ),
             ),
             SizedBox(
@@ -263,7 +267,7 @@ class _StatusPageState extends State<StatusPage> {
             ),
             Container(
               decoration: BoxDecoration(
-                color: status ? secondary : Colors.grey[850],
+                color: status ? appBgColorSecondary : Colors.grey[850],
               ),
               width: widthR * 2500,
               height: heightR *
@@ -293,7 +297,7 @@ class _StatusPageState extends State<StatusPage> {
             Text(
               "Device",
               style: TextStyle(
-                fontWeight: FontWeight.w200,
+                fontWeight: FontWeight.bold,
                 fontSize: 25,
               ),
             ),
@@ -318,14 +322,14 @@ class _StatusPageState extends State<StatusPage> {
                           height: heightR * 160,
                           width: widthR * 400,
                           child: Image.asset(
-                            "assets/images/xxxx",
+                            "assets/icon2.png",
                             fit: BoxFit.contain,
                           ),
                         ),
                         SizedBox(
                           width: widthR * 25,
                         ),
-                        const Column(
+                        Column(
                           children: [
                             Text(
                               "Pump",
@@ -370,14 +374,14 @@ class _StatusPageState extends State<StatusPage> {
                           height: heightR * 160,
                           width: widthR * 400,
                           child: Image.asset(
-                            "assets/images/xxxx",
+                            "assets/icon3.png",
                             fit: BoxFit.contain,
                           ),
                         ),
                         SizedBox(
                           width: widthR * 25,
                         ),
-                        const Column(
+                        Column(
                           children: [
                             Text(
                               "Hose",
